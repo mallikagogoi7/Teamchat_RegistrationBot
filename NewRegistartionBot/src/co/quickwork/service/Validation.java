@@ -47,6 +47,23 @@ public class Validation {
 			return validate;
 		}
 		
+		public boolean SixDigitValidation(String message)
+		{
+			boolean valid=false;
+			  for(int i=1;i<=6;i++)
+			  {
+				  if(Integer.parseInt(message)==i)
+				  {
+					  valid=true;
+					  break;
+				  }
+				  else
+				  {
+					  valid=false;
+				  }
+			  }
+			  return valid;  
+		}
 		//checked
 	 public  boolean isValidDate(String date)
 	 {
