@@ -160,6 +160,7 @@ public class Database {
 	{
 		return (int) edit.findOne(new BasicDBObject("context", context)).get("num");
 	}
+
 	
 	//checked
 	public void careerInterest(String interest,String context)
@@ -168,7 +169,30 @@ public class Database {
 		objDb1.put("context", context);
 		
 		BasicDBObject objDb2 = new BasicDBObject();
-		objDb2.put("careerInterest", interest);
+		if(interest.equals("1"))
+		{
+		objDb2.put("careerInterest", "Sales, Business Development & Marketing");
+		}
+		if(interest.equals("2"))
+		{
+			objDb2.put("careerInterest", "Operations - Back office, Front office");
+		}
+		if(interest.equals("3"))
+		{
+			objDb2.put("careerInterest", "Digital & Social Media Marketing");
+		}
+		if(interest.equals("4"))
+		{
+			objDb2.put("careerInterest", "Software Development - Web/Mobile");
+		}
+		if(interest.equals("5"))
+		{
+		objDb2.put("careerInterest", "Graphic Designer");
+		}
+		if(interest.equals("6"))
+		{
+		 objDb2.put("careerInterest", "Do Not Know Yet");
+		}
 		BasicDBObject updateDBobj = new BasicDBObject();
 		updateDBobj.put("$set", objDb2);
 		userDetails.update(objDb1, updateDBobj);

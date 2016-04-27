@@ -109,18 +109,18 @@ public class RegServlet extends HttpServlet {
 		        else if(validation.FiveDigitValidation(message)==true && message.equalsIgnoreCase("3"))
 		        {
 		        	data="For editing of degree,please reply with 1 or 2 or.....upto 12"+lineBreak
-		        			  +"1. B.Tech"+lineBreak
-			        		  +"2. B.A"+lineBreak
-			        	      +"3. B.Com"+lineBreak
-			        	      +"4. B.E"+lineBreak
-			        		  +"5. B.Sc"+lineBreak
-			        	      +"6. BCA"+lineBreak
-			        	      +"7. BBA"+lineBreak
-			        		  +"8. BAF"+lineBreak
-			        	      +"9. BMS"+lineBreak
-			        	      +"10. MCA"+lineBreak
-			        	      +"11. M.Tech"+lineBreak
-			        	      +"12. HSC"+lineBreak;
+		        			  +"1"+" "+" BTech"+lineBreak
+			        		  +"2"+" "+" BA"+lineBreak
+			        	      +"3"+" "+" BCom"+lineBreak
+			        	      +"4"+" "+" BE"+lineBreak
+			        		  +"5"+" "+" BSc"+lineBreak
+			        	      +"6"+" "+" BCA"+lineBreak
+			        	      +"7"+" "+" BBA"+lineBreak
+			        		  +"8"+" "+" BAF"+lineBreak
+			        	      +"9"+" "+" BMS"+lineBreak
+			        	      +"10"+" "+"MCA"+lineBreak
+			        	      +"11"+" "+"MTech"+lineBreak
+			        	      +"12"+" "+"HSC"+lineBreak;
 
 		        	out.println(data);
 		        	database.updateCounter(context, 92);
@@ -130,11 +130,12 @@ public class RegServlet extends HttpServlet {
 		        else if(validation.FiveDigitValidation(message)==true && message.equalsIgnoreCase("4"))
 		        {
 		        	data="For editing of year of passing, please reply with 1 or 2 or 3 or 4"+lineBreak
-		        		  +"1. 2013"+lineBreak
-		        		  +"2. 2014"+lineBreak
-		        		  +"3. 2015"+lineBreak
-		        		  +"4. 2016"+lineBreak;
+		        		  +"1"+" "+"2013"+lineBreak
+		        		  +"2"+" "+"2014"+lineBreak
+		        		  +"3"+" "+"2015"+lineBreak
+		        		  +"4"+" "+"2016"+lineBreak;
 		        	out.println(data);
+		        	out.flush();
 		        	database.updateCounter(context, 90);
 		        	database.updateEditedNumber(context, 4);
 		        	break;
@@ -142,14 +143,83 @@ public class RegServlet extends HttpServlet {
 		        else if(validation.FiveDigitValidation(message)==true && message.equalsIgnoreCase("5"))
 		        {
 		        	data="For editing of Gender, please reply with 1 or 2 or 3"+lineBreak
-		        		  +"1.Male"+lineBreak
-		        		  +"2.Female"+lineBreak
-		        		  +"3.Other"+lineBreak;
+		        		  +"1"+" "+"Male"+lineBreak
+		        		  +"2"+" "+"Female"+lineBreak
+		        		  +"3"+" "+"Other"+lineBreak;
 		        	out.println(data);
 		        	database.updateCounter(context, 91);
 		        	database.updateEditedNumber(context, 5);
 		        	break;	
 		        }	
+		        else if(database.getEditedNumber(context)==0 && validation.ThreeDigitValidation(message)==true)
+		        {
+		        	   String mobile=dao.getMobileUsingUserMail(userMail); 
+				       dao.updateUserLocation(mobile, message);
+				       database.updateCounter(context, 96);
+				       
+		        }
+		
+		        else if(database.getEditedNumber(context)==2)
+		        {
+		        	 data="Invalid entry. Please enter 1 or 2 or 3.";
+				      out.println(data);
+				      out.flush();
+		    	      database.decreaseCounter(context);	
+		    	      database.updateEditedNumber(context, 0);
+					  break;		        	
+		        }
+		       
+		        else if(database.getEditedNumber(context)==6 && validation.degreeValidation(message)==true)
+		        {
+		        	String mobile=dao.getMobileUsingUserMail(userMail); 
+			        dao.updateUserDegree(mobile, message);
+			        database.updateCounter(context, 96);
+			        database.updateEditedNumber(context, 0);
+		        }
+		
+		        else if(database.getEditedNumber(context)==3)
+		        {
+		        	  data="Invalid entry. Please enter number from 1 to 12.";
+				      out.println(data);
+				      out.flush();
+		    	      database.decreaseCounter(context);
+		    	      database.updateEditedNumber(context, 6);
+					  break;		        	
+		        }
+		        else if(database.getEditedNumber(context)==7 && validation.ThreeDigitValidation(message)==true)
+		        {
+		        	String mobile=dao.getMobileUsingUserMail(userMail); 
+			        dao.updateGender(mobile, message);
+			        database.updateCounter(context, 96);
+			        database.updateEditedNumber(context, 0);
+		        }
+		
+		        else if(database.getEditedNumber(context)==5)
+		        {
+		        	 data="Invalid entry. Please enter 1 or 2 or 3.";
+				      out.println(data);
+				      out.flush();
+		    	      database.decreaseCounter(context);	
+		    	      database.updateEditedNumber(context, 7);
+					  break;	        	
+		        }
+		        else if(database.getEditedNumber(context)==8 && validation.FourDigitValidation(message)==true)
+			    {
+		        	String mobile=dao.getMobileUsingUserMail(userMail); 
+			        dao.updateUserYOP(mobile,message);	
+			        database.updateCounter(context, 96);
+			        database.updateEditedNumber(context, 0);
+		        }
+		
+		        else if(database.getEditedNumber(context)==4)
+		        {
+		        	  data="Invalid entry. Please enter 1 or 2 or 3 or 4.";
+				      out.println(data);
+				      out.flush();
+		    	      database.decreaseCounter(context);	
+		    	      database.updateEditedNumber(context, 8);
+					  break;	        	
+		        }
 		        else
 		        {
 		        	data="Invalid entry. Please enter number between 0 to 5"+lineBreak;
@@ -182,49 +252,59 @@ public class RegServlet extends HttpServlet {
 	    	    	  break;
 			     }
 			     
-		case 3: if(validation.phoneValidation(message)==true)
-			   {
-			     database.addAlternate(message, context);
-			     database.updateCounter(context, 4);
-			   }
-	
-		       else if((database.getAltNo(context).equals("3"))&&(database.getCheckFlag(context)==3))
-		       {
-		    	  data="We also need an alternate phone number so that we can reach you."+lineBreak;
-		    	  out.println(data);
-		    	  database.updateCheckFlag(4, context);
-	    	      database.decreaseCounter(context);
-	    	      break;
-		       }
-		       else
-		       {
-		    	      data="Invalid phone number. Please enter a valid phone number.";
-	    	    	  out.println(data);
-	    	    	  out.flush();
-	    	    	  database.decreaseCounter(context);
-	    	    	  break;
-		       }
+		case 3: if(validation.phoneValidation(message)==true&&(database.getCheckFlag(context)==4))
+		   {
+		     database.addAlternate(message, context);
+		     data="Can you please tell us your Career Field of Interest? Please reply with 1 or 2 or 3 or 4 or 5 or 6."+lineBreak
+		                +"1. Sales, Business Development & Marketing"+lineBreak
+						+"2. Operations - Back office, Front office"+lineBreak 
+						+"3. Digital & Social Media Marketing"+lineBreak
+						+"4. Software Development - Web/Mobile"+lineBreak
+						+"5. Graphic Designer"+lineBreak
+						+"6. Do Not Know Yet"+lineBreak;
+						out.println(data);
+		     break;
+		   }
+
+	       else if((database.getAltNo(context).equals("3"))&&(database.getCheckFlag(context)==3))
+	       {
+	    	  data="We also need an alternate phone number so that we can reach you."+lineBreak;
+	    	  out.println(data);
+	    	  out.flush();
+	    	  database.updateCheckFlag(4, context);
+   	      database.decreaseCounter(context);
+   	      break;
+	       }
+	       else
+	       {
+	    	      data="Invalid phone number. Please enter a valid phone number.";
+   	    	  out.println(data);
+   	    	  out.flush();
+   	    	  database.decreaseCounter(context);
+   	    	  break;
+	       }
 			 
 		case 4: 
-				if(validation.FiveDigitValidation(message)==true)
+				if(validation.SixDigitValidation(message)==true)
 				{
 					database.careerInterest(message,context);
 					database.updateCounter(context, 5);
+					 database.updateCheckFlag(5, context);
 				}
-				else if((database.getCareerInterest(context).equals("7"))&&(database.getCheckFlag(context)==4))
-				{
-					data="Can you please tell us your Career Field of Interest? Please reply with 1 or 2 or 3 or 4 or 5 or 6."+lineBreak
-			                +"1. Sales, Business Development & Marketing"+lineBreak
-							+"2. Operations - Back office, Front office"+lineBreak 
-							+"3. Digital & Social Media Marketing"+lineBreak
-							+"4. Software Development - Web/Mobile"+lineBreak
-							+"5. Graphic Designer"+lineBreak
-							+"6. Do Not Know Yet"+lineBreak;
-							out.println(data);
-						   database.updateCheckFlag(5, context);
-				    	   database.decreaseCounter(context);
-				    	   break;
-				}
+//				else if((database.getCareerInterest(context).equals("7"))&&(database.getCheckFlag(context)==4))
+//				{
+//					data="Can you please tell us your Career Field of Interest? Please reply with 1 or 2 or 3 or 4 or 5 or 6."+lineBreak
+//			                +"1. Sales, Business Development & Marketing"+lineBreak
+//							+"2. Operations - Back office, Front office"+lineBreak 
+//							+"3. Digital & Social Media Marketing"+lineBreak
+//							+"4. Software Development - Web/Mobile"+lineBreak
+//							+"5. Graphic Designer"+lineBreak
+//							+"6. Do Not Know Yet"+lineBreak;
+//							out.println(data);
+//						   database.updateCheckFlag(5, context);
+//				    	   database.decreaseCounter(context);
+//				    	   break;
+//				}
 				else
 				{
 					data="Invalid  entry. Please enter 1 or 2 or 3 or 4 or 5 or 6";
@@ -246,7 +326,8 @@ public class RegServlet extends HttpServlet {
 				     	data="Thank you. You can also reach out to us by calling at 7045607365/66 or sending email to hr@quickwork.co";
 						 database.availability(message, context);								
 						 out.println(data);
-						 database.updateCounter(context,98);	
+						 database.updateCheckFlag(7, context);
+						 database.updateCounter(context,8);	
 					  }
 				   }
 					
@@ -276,12 +357,16 @@ public class RegServlet extends HttpServlet {
    			 }
    			else if(validation.isValidDate(message)==true)
 		        {
-   				 data="Thank you. Quickwork Team will reach out to you soon. You can also reach out to us by calling at 7045607365/66 or sending email to hr@quickwork.co"
-   						 +lineBreak;
-                 out.println(data);
+//   				 data="Thank you. Quickwork Team will reach out to you soon. You can also reach out to us by calling at 7045607365/66 or sending email to hr@quickwork.co"
+//   						 +lineBreak;
+//                 out.println(data);
    				 database.startInternshipDate(message, context);
-    	         database.updateCounter(context, 98); 
+    	         database.updateCounter(context, 7); 
 		        }
+   			else if(database.getCheckFlag(context)==7)
+   			{
+   				break;
+   			}
 		   	    else
 	 	        {
 	 	        data="Invalid date. Please enter a valid date in dd/mm/yyyy format.";
@@ -289,7 +374,18 @@ public class RegServlet extends HttpServlet {
 	 	    	database.decreaseCounter(context);
 	 	    	break; 
 	 	        }
-            
+			  
+		case 7: 
+			  data="Thank you. Quickwork Team will reach out to you soon. You can also reach out to us by calling at 7045607365/66 or sending email to hr@quickwork.co"
+						 +lineBreak;
+		           out.println(data);
+		           break;
+		  
+		case 8:
+			   database.decreaseCounter(context);
+			   break;
+			   
+			  
 		case 91:  if(validation.FourDigitValidation(message)==true)	
 					{
 			          String mobile=dao.getMobileUsingUserMail(userMail); 
@@ -377,7 +473,7 @@ public class RegServlet extends HttpServlet {
       		     +"1. Name: "+" "+ dao.getUserNameUsingMobile(mob1)+lineBreak
       		      +"2. Location: "+" "+ dao.getLocationUsingLID(lid1)+lineBreak
       		     +"3. Degree: "+" "+ dao.getUserDegreeUsingDID(did1)+lineBreak
-      		      +"4. Year of passing: "+" "+ dao.getUserYOPUsingMobile(mob1)+"."+lineBreak
+      		      +"4. Year of passing: "+" "+ dao.getUserYOPUsingMobileEdited(mob1)+"."+lineBreak
       		     +"5. Gender: "+" "+ dao.getUserGenderUsingMobile(mob1)+lineBreak
       		     +"If your profile is correct, please reply with 0, if you wish to you wish to change or update, please reply with 1 or 2 or 3 or 4 or 5.";
 			     out.println(data);
@@ -385,7 +481,10 @@ public class RegServlet extends HttpServlet {
 			     break;
 		  
 		  case 98:	
-			   data="The end";
+			  data="Thank you. Quickwork Team will reach out to you soon. You can also reach out to us by calling at 7045607365/66 or sending email to hr@quickwork.co"
+						 +lineBreak;
+              out.println(data);
+              break;
 		  }
 	}
 

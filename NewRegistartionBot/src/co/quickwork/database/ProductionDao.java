@@ -80,6 +80,12 @@ public class ProductionDao {
 		return userYOP;
 	}
 	
+	public String getUserYOPUsingMobileEdited(String mobile)
+	{
+		String userYOP = personalDetailsTable.findOne(new BasicDBObject("mobile", mobile)).get("yearOfPassing").toString();
+		return userYOP;
+	}
+	
 	
 	public String getUserGenderUsingMobile(String mobile)
 	{
@@ -190,88 +196,95 @@ public class ProductionDao {
 		objDb1.put("mobile", mobile);
 		
 		BasicDBObject objDb2 = new BasicDBObject();
+		try{
+			
+		
 		if(number.equals("1"))
 		{
-			String DID = getDIDUsingDegree("B.Tech");
-		    objDb2.put("did", DID);
-		}
-		
-		
-		if(number.equals("2"))
-		{
-			String DID = getDIDUsingDegree("B.E");
+			String DID = getDIDUsingDegree("B.Tech"); // changes required during production
 		    objDb2.put("did", DID);
 		}
 		
 		
 //		if(number.equals("2"))
 //		{
-//		   String lID = getLIDUsingLocation("B.A");
-//		   objDb2.put("lid", lID);
+//			String DID = getDIDUsingDegree("B.E");
+//		    objDb2.put("did", DID);
 //		}
 //		
 		
+		if(number.equals("2"))
+		{
+		   String lID = getDIDUsingDegree("B.A");
+		   objDb2.put("lid", lID);
+		}
+		
+		
 		if(number.equals("3"))
 		{
-			String lID = getLIDUsingLocation("B.Com");
+			String lID = getDIDUsingDegree("B.Com");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("4"))
 		{
-			String lID = getLIDUsingLocation("B.E");
+			String lID = getDIDUsingDegree("B.E");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("5"))
 		{
-			String lID = getLIDUsingLocation("B.Sc");
+			String lID = getDIDUsingDegree("B.Sc");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("6"))
 		{
-			String lID = getLIDUsingLocation("BCA");
+			String lID = getDIDUsingDegree("BCA");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("7"))
 		{
-			String lID = getLIDUsingLocation("BBA");
+			String lID = getDIDUsingDegree("BBA");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("8"))
 		{
-			String lID = getLIDUsingLocation("BAF");
+			String lID = getDIDUsingDegree("BAF");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("9"))
 		{
-			String lID = getLIDUsingLocation("BMS");
+			String lID = getDIDUsingDegree("BMS");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("10"))
 		{
-			String lID = getLIDUsingLocation("MCA");
+			String lID = getDIDUsingDegree("MCA");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("11"))
 		{
-			String lID = getLIDUsingLocation("M.Tech");
+			String lID = getDIDUsingDegree("M.Tech");
 		   objDb2.put("lid", lID);
 		}
 		
 		if(number.equals("12"))
 		{
-			String lID = getLIDUsingLocation("HSC");
+			String lID = getDIDUsingDegree("HSC");
 		   objDb2.put("lid", lID);
 		}
 		
-		
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println();
+		}
 		
 		BasicDBObject updateDBobj = new BasicDBObject();
 		updateDBobj.put("$set", objDb2);
@@ -292,13 +305,13 @@ public class ProductionDao {
 		
 		if(number.equals("2"))
 		{
-		    objDb2.put("gender", "Female");
+		    objDb2.put("gender", "female");
 		}
 		
 		
 		if(number.equals("3"))
 		{
-			objDb2.put("gender", "Other");
+			 objDb2.put("gender", "other");
 		}
 		
 		BasicDBObject updateDBobj = new BasicDBObject();
@@ -314,24 +327,23 @@ public class ProductionDao {
 		BasicDBObject objDb2 = new BasicDBObject();
 		if(number.equals("1"))
 		{
-			objDb2.put("personYOP", "2013");
+			objDb2.put("yearOfPassing","2013");
 		}
-		
 		
 		if(number.equals("2"))
 		{
-		    objDb2.put("personYOP", "2014");
+		    objDb2.put("yearOfPassing", "2014");
 		}
 		
 		
 		if(number.equals("3"))
 		{
-			objDb2.put("personYOP", "2015");
+			objDb2.put("yearOfPassing", "2015");
 		}
 		
 		if(number.equals("4"))
 		{
-			objDb2.put("personYOP", "2016");
+			objDb2.put("yearOfPassing", "2016");
 		}
 		
 		
@@ -342,7 +354,7 @@ public class ProductionDao {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		ProductionDao objProductionDao = new ProductionDao();
-		objProductionDao.updateGender("9930770326","3");
+		System.out.println(objProductionDao.getDIDUsingDegree("B. Tech."));
 	}
 
 }
